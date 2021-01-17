@@ -69,7 +69,7 @@ Going back to controllerPoller, fill out the full path of the location of your P
 When the hotkey is pressed, 1 is returned, and the 2nd half of the controllerPoller script then allows 3 iterations of polling to the 2nd controller. This usually gives a period of 15 seconds to connect to the other controller.
 
 ## Cron Job
-The most important part is to be constantly running these scripts. You would want to be able to (re)connect a controller at any time while the Raspberry Pi is on. I have used crontab, which can run this bash script every minute. When no controllers are connected, the script itself runs for 55 seconds (11 polls at about 5 seconds each). When 1 of the 2 controllers is connected, the python script is triggered and runs forever, but there is logic in the bash script to kill the python script the next time the controllerPoller script runs. This prevents the python processes from stacking up and draining the resources of your Pi.
+The most important part is to be constantly running these scripts. You would want to be able to (re)connect a controller at any time while the Raspberry Pi is on. I have used crontab, which can run this bash script every minute. When no controllers are connected, the script itself runs for 55 seconds (11 polls at about 5 seconds each). When 1 of the 2 controllers is connected, the python script is triggered and runs forever, but there is logic in the controllerPoller script to kill the python script the next time controllerPoller runs. This prevents the python processes from stacking up and draining the resources of your Pi.
 
 Enter **crontab -e** on your Pi. You may have to select a default editor.
 
