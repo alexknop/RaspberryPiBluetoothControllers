@@ -1,6 +1,6 @@
 #!/bin/bash
 #Replace MACs with those of your controller(s).
-anyConnect=$(hcitool con | grep "<MAC OF CONTROLLER>\|<MAC OF CONTROLLER>" | grep "state 1" | wc -l)
+anyConnect=$(hcitool con | grep "<MAC OF CONTROLLER #1>\|<MAC OF CONTROLLER #2>" | grep "state 1" | wc -l)
 
 counter=1
 
@@ -9,14 +9,14 @@ counter=1
 while [ $anyConnect -eq 0 ] && [ $counter -lt 6 ]
 do
 #Replace MACs with those of your controller(s).
- bluetoothctl -- connect <MAC OF CONTROLLER>
+ bluetoothctl -- connect <MAC OF CONTROLLER #1>
  sleep 5
- bluetoothctl -- connect <MAC OF CONTROLLER>
+ bluetoothctl -- connect <MAC OF CONTROLLER #2>
  sleep 5
 
  ((counter++))
  #Replace MACs with those of your controller(s).
- anyConnect=$(hcitool con | grep "<MAC OF CONTROLLER>\|<MAC OF CONTROLLER>" | grep "state 1" | wc -l)
+ anyConnect=$(hcitool con | grep "<MAC OF CONTROLLER #1>\|<MAC OF CONTROLLER #2>" | grep "state 1" | wc -l)
 done
 
 #If there is 1 controller connected, listen for the touchpad button to be pressed
@@ -24,7 +24,7 @@ if [ $anyConnect -eq 1 ]
 then
  #check to see which controller is connected
  #Replace MACs with those of your controller(s).
- oneConnect=$(hcitool con | grep "<MAC OF CONTROLLER>" | grep "state 1" | wc -l)
+ oneConnect=$(hcitool con | grep "<MAC OF CONTROLLER #1>" | grep "state 1" | wc -l)
 
  #check to see if already scanning for input, and if so kill the process
  buttonPressProcID=$(ps -aelf | grep "python <PATH TO PYTHON SCRIPT>" | grep "poll_s")
@@ -46,13 +46,13 @@ then
    if [ $oneConnect -eq 1 ]
    then
     #Replace MACs with those of your controller(s).
-    bluetoothctl -- connect <MAC OF CONTROLLER>
+    bluetoothctl -- connect <MAC OF CONTROLLER #2>
    else
-    bluetoothctl -- connect <MAC OF CONTROLLER>
+    bluetoothctl -- connect <MAC OF CONTROLLER #1>
    fi
    sleep 5
    ((counter++))
-   anyConnect=$(hcitool con | grep "<MAC OF CONTROLLER>\|<MAC OF CONTROLLER>" | grep "state 1" | wc -l)
+   anyConnect=$(hcitool con | grep "<MAC OF CONTROLLER #1>\|<MAC OF CONTROLLER #2>" | grep "state 1" | wc -l)
   done
  fi
 fi
