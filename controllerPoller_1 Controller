@@ -1,5 +1,6 @@
 #!/bin/bash
-anyConnect=$(hcitool con | grep "<MAC OF CONTROLLER>" | grep "state 1" | wc -l)
+controllerMAC=<MAC OF CONTROLLER>
+anyConnect=$(hcitool con | grep "$controllerMAC" | grep "state 1" | wc -l)
 
 counter=1
 
@@ -7,10 +8,10 @@ counter=1
 #longest this will run is 55 seconds
 while [ $anyConnect -eq 0 ] && [ $counter -lt 11 ]
 do
- bluetoothctl -- connect <MAC OF CONTROLLER>
+ bluetoothctl -- connect $controllerMAC
  sleep  5
 
  ((counter++))
- anyConnect=$(hcitool con | grep "<MAC OF CONTROLLER>" | grep "state 1" | wc -l)
+ anyConnect=$(hcitool con | grep "$controllerMAC" | grep "state 1" | wc -l)
 done
 
