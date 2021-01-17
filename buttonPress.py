@@ -1,5 +1,5 @@
 import evdev
-from evdev import InputDevice, categorize, ecodes, list_devices
+from evdev import InputDevice, ecodes
 
 #creates object 'gamepad' to store the data
 devices = [evdev.InputDevice(path) for path in evdev.list_devices()]
@@ -7,7 +7,7 @@ for device in devices:
     #change name to name of your device
     if device.name == "<DEVICE NAME>":
         gamepad = InputDevice(device.path)
-
+        break
 
 for event in gamepad.read_loop():
     #break if you find a button press
