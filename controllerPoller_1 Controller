@@ -1,0 +1,16 @@
+#!/bin/bash
+anyConnect=$(hcitool con | grep "77:23:F5:1C:B5:4A" | grep "state 1" | wc -l)
+
+counter=1
+
+#try to connect to any controller if none are connected
+#longest this will run is 55 seconds
+while [ $anyConnect -eq 0 ] && [ $counter -lt 11 ]
+do
+ bluetoothctl -- connect 77:23:F5:1C:B5:4A
+ sleep  5
+
+ ((counter++))
+ anyConnect=$(hcitool con | grep "77:23:F5:1C:B5:4A" | grep "state 1" | wc -l)
+done
+
