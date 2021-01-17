@@ -12,14 +12,12 @@ counter=1
 #longest this will run is 55 seconds
 while [ $anyConnect -eq 0 ] && [ $counter -lt 6 ]
 do
-#Replace MACs with those of your controller(s).
  bluetoothctl -- connect $controller1
  sleep 5
  bluetoothctl -- connect $controller2
  sleep 5
 
  ((counter++))
- #Replace MACs with those of your controller(s).
  anyConnect=$(hcitool con | grep "$controller1\|$controller2" | grep "state 1" | wc -l)
 done
 
@@ -27,7 +25,6 @@ done
 if [ $anyConnect -eq 1 ]
 then
  #check to see which controller is connected
- #Replace MACs with those of your controller(s).
  oneConnect=$(hcitool con | grep "$controller1" | grep "state 1" | wc -l)
 
  #check to see if already scanning for input, and if so kill the process
@@ -49,7 +46,6 @@ then
   do
    if [ $oneConnect -eq 1 ]
    then
-    #Replace MACs with those of your controller(s).
     bluetoothctl -- connect $controller2
    else
     bluetoothctl -- connect $controller1
