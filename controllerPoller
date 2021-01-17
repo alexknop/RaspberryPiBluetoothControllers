@@ -2,7 +2,7 @@
 #Replace MACs with those of your controller(s).
 controller1=<MAC OF CONTROLLER #1>
 controller2=<MAC OF CONTROLLER #2>
-pythonPath=<PATH TO PYTHON SCRIPT>
+pythonPath="<PATH TO PYTHON SCRIPT>"
 
 anyConnect=$(hcitool con | grep "$controller1\|$controller2" | grep "state 1" | wc -l)
 
