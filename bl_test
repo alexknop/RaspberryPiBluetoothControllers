@@ -45,9 +45,10 @@ then
   do
    if [ $oneConnect -eq 1 ]
    then
-    bluetoothctl -- connect 05:80:73:7B:82:C0
+    #Replace MACs with those of your controller(s).
+    bluetoothctl -- connect <MAC OF CONTROLLER>
    else
-    bluetoothctl -- connect 77:23:F5:1C:B5:4A
+    bluetoothctl -- connect <MAC OF CONTROLLER>
    fi
    sleep 5
    ((counter++))
