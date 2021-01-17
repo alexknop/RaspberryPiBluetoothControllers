@@ -13,6 +13,6 @@ for event in gamepad.read_loop():
     #break if you find a button press
     if event.type == ecodes.EV_KEY:
         #change event code to the code of your button
-        if event.code == <button code>:
+        if event.code == <BUTTON CODE>:
             print("1")
             break
