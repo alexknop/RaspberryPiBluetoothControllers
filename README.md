@@ -74,14 +74,9 @@ The most important part is to be constantly running these scripts. You would wan
 Enter **crontab -e** on your Pi. You may have to select a default editor.
 
 On a new line, enter 5 stars with a space between each star and then your full path to your controllerPoller script
+
 Example:
 	
 	* * * * * /home/pi/Scripts/controllerPoller
 
 Save the cron job file and you are good to go!
-
-
-
- 
- 
- 
