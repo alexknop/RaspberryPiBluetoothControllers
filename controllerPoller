@@ -42,7 +42,7 @@ then
  then
   counter=1
   #for next 15 seconds try to connect to other controller
-  while [ $anyConnect -eq 1 ] && [ $counter -lt 3 ]
+  while [ $anyConnect -eq 1 ] && [ $counter -lt 4 ]
   do
    if [ $oneConnect -eq 1 ]
    then
