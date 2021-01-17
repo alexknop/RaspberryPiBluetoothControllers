@@ -1,5 +1,6 @@
 #!/bin/bash
-anyConnect=$(hcitool con | grep "77:23:F5:1C:B5:4A\|05:80:73:7B:82:C0" | grep "state 1" | wc -l)
+#Replace MACs with those of your controller(s).
+anyConnect=$(hcitool con | grep "<MAC OF CONTROLLER>\|<MAC OF CONTROLLER>" | grep "state 1" | wc -l)
 
 counter=1
 
@@ -7,23 +8,26 @@ counter=1
 #longest this will run is 55 seconds
 while [ $anyConnect -eq 0 ] && [ $counter -lt 6 ]
 do
- bluetoothctl -- connect 77:23:F5:1C:B5:4A
+#Replace MACs with those of your controller(s).
+ bluetoothctl -- connect <MAC OF CONTROLLER>
  sleep 5
- bluetoothctl -- connect 05:80:73:7B:82:C0
+ bluetoothctl -- connect <MAC OF CONTROLLER>
  sleep 5
 
  ((counter++))
- anyConnect=$(hcitool con | grep "77:23:F5:1C:B5:4A\|05:80:73:7B:82:C0" | grep "state 1" | wc -l)
+ #Replace MACs with those of your controller(s).
+ anyConnect=$(hcitool con | grep "<MAC OF CONTROLLER>\|<MAC OF CONTROLLER>" | grep "state 1" | wc -l)
 done
 
 #If there is 1 controller connected, listen for the touchpad button to be pressed
 if [ $anyConnect -eq 1 ]
 then
  #check to see which controller is connected
- oneConnect=$(hcitool con | grep "77:23:F5:1C:B5:4A" | grep "state 1" | wc -l)
+ #Replace MACs with those of your controller(s).
+ oneConnect=$(hcitool con | grep "<MAC OF CONTROLLER>" | grep "state 1" | wc -l)
 
  #check to see if already scanning for input, and if so kill the process
- buttonPressProcID=$(ps -aelf | grep "python /home/pi/Scripts/touchpadButton.py" | grep "poll_s")
+ buttonPressProcID=$(ps -aelf | grep "python <PATH TO PYTHON SCRIPT>" | grep "poll_s")
  array=($buttonPressProcID)
  procID=$(eval echo ${array[@]:3:1})
  if [ ! -z "$procID" ]
@@ -32,7 +36,7 @@ then
  fi
 
  #check for touchpad button press
- buttonPress=$(python /home/pi/Scripts/touchpadButton.py)
+ buttonPress=$(python <PATH TO PYTHON SCRIPT>)
  if [ $buttonPress -eq 1 ]
  then
   counter=1
@@ -47,7 +51,7 @@ then
    fi
    sleep 5
    ((counter++))
-   anyConnect=$(hcitool con | grep "77:23:F5:1C:B5:4A\|05:80:73:7B:82:C0" | grep "state 1" | wc -l)
+   anyConnect=$(hcitool con | grep "<MAC OF CONTROLLER>\|<MAC OF CONTROLLER>" | grep "state 1" | wc -l)
   done
  fi
 fi
