@@ -31,7 +31,7 @@ Next, you are going to want to install the evdev module for python (assuming you
 **sudo pip install evdev**
  
  
-I followed these tutorials to get a [list of my devices](https://python-evdev.readthedocs.io/en/latest/tutorial.html) and to be able to [grab the code](https://python-evdev.readthedocs.io/en/latest/tutorial.html) used for my hotkey.
+I followed these tutorials to get a [list of my devices](https://python-evdev.readthedocs.io/en/latest/tutorial.html#listing-accessible-event-devices) and to be able to [grab the code](https://python-evdev.readthedocs.io/en/latest/tutorial.html#reading-events) used for my hotkey.
  
  
 Example (copied code into a file called "list"):
