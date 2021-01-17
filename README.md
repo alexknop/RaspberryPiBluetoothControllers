@@ -6,7 +6,7 @@ I have a knock-off PS4 bluetooth controller that I can initially pair up with my
 
 
 ## Set-Up
--You can either edit files first and then copy to your Raspberry Pi or copy the files and edit on your Raspberry Pi.
+-You can either edit the files first and then copy to your Raspberry Pi or copy the files and edit on your Raspberry Pi.
 
 First, pair your controllers up so that they are connected.
 
@@ -22,7 +22,7 @@ In my output, one of my controller MACs is 05:80:73:7B:82:C0.
  
  
 Go to controllerPoller and enter your MACs into the fields necessary.
-**If using just one controller, then you only need the file controllerPoller_1 Controller and can then go to the Cron Job step.**
+**If using just one controller, then you only need the file controllerPoller_1 Controller and can then go to the Cron Job step. If using 2 controllers, you do not need the controllerPoller_1 Controller file and can continue with these instructions**
  
 The first while loop is meant to run while there are no controllers connected. I found that when using 1 controller for a 1-player game, constantly polling the other controller was causing a lot of input lag. The second part of this script is meant to only poll for the second controller when a hotkey is pressed.
  
