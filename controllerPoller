@@ -4,13 +4,13 @@ controller1=<MAC OF CONTROLLER #1>
 controller2=<MAC OF CONTROLLER #2>
 pythonPath="<PATH TO PYTHON SCRIPT>"
 
-anyConnect=$(hcitool con | grep "$controller1\|$controller2" | grep "state 1" | wc -l)
+anyConnect="hcitool con | grep \"$controller1\|$controller2\" | grep \"state 1\" | wc -l"
 
 counter=1
 
 #try to connect to any controller if none are connected
 #longest this will run is 55 seconds
-while [ $anyConnect -eq 0 ] && [ $counter -lt 6 ]
+while [ $(eval $anyConnect) -eq 0 ] && [ $counter -lt 6 ]
 do
  bluetoothctl -- connect $controller1
  sleep 5
@@ -18,11 +18,10 @@ do
  sleep 5
 
  ((counter++))
- anyConnect=$(hcitool con | grep "$controller1\|$controller2" | grep "state 1" | wc -l)
 done
 
 #If there is 1 controller connected, listen for the touchpad button to be pressed
-if [ $anyConnect -eq 1 ]
+if [ $(eval $anyConnect) -eq 1 ]
 then
  #check to see which controller is connected
  oneConnect=$(hcitool con | grep "$controller1" | grep "state 1" | wc -l)
@@ -42,7 +41,7 @@ then
  then
   counter=1
   #for next 15 seconds try to connect to other controller
-  while [ $anyConnect -eq 1 ] && [ $counter -lt 4 ]
+  while [ $(eval $anyConnect) -eq 1 ] && [ $counter -lt 4 ]
   do
    if [ $oneConnect -eq 1 ]
    then
@@ -52,7 +51,6 @@ then
    fi
    sleep 5
    ((counter++))
-   anyConnect=$(hcitool con | grep "$controller1\|$controller2" | grep "state 1" | wc -l)
   done
  fi
 fi
