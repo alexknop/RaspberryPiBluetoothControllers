@@ -8,6 +8,8 @@ I have a knock-off PS4 bluetooth controller that I can initially pair up with my
 ## Set-Up
 -You can either edit the files first and then copy to your Raspberry Pi or copy the files and edit on your Raspberry Pi.
 
+-You will need to run "chmod +x \<filename\>" on each file in order to make them executable.
+	
 First, pair your controllers up so that they are connected.
 
 In the Pi, run the command "hcitool con":
