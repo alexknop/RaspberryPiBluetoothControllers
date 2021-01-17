@@ -1,0 +1,53 @@
+#!/bin/bash
+anyConnect=$(hcitool con | grep "77:23:F5:1C:B5:4A\|05:80:73:7B:82:C0" | grep "state 1" | wc -l)
+
+counter=1
+
+#try to connect to any controller if none are connected
+#longest this will run is 55 seconds
+while [ $anyConnect -eq 0 ] && [ $counter -lt 6 ]
+do
+ bluetoothctl -- connect 77:23:F5:1C:B5:4A
+ sleep 5
+ bluetoothctl -- connect 05:80:73:7B:82:C0
+ sleep 5
+
+ ((counter++))
+ anyConnect=$(hcitool con | grep "77:23:F5:1C:B5:4A\|05:80:73:7B:82:C0" | grep "state 1" | wc -l)
+done
+
+#If there is 1 controller connected, listen for the touchpad button to be pressed
+if [ $anyConnect -eq 1 ]
+then
+ #check to see which controller is connected
+ oneConnect=$(hcitool con | grep "77:23:F5:1C:B5:4A" | grep "state 1" | wc -l)
+
+ #check to see if already scanning for input, and if so kill the process
+ buttonPressProcID=$(ps -aelf | grep "python /home/pi/Scripts/touchpadButton.py" | grep "poll_s")
+ array=($buttonPressProcID)
+ procID=$(eval echo ${array[@]:3:1})
+ if [ ! -z "$procID" ]
+ then
+  kill $procID
+ fi
+
+ #check for touchpad button press
+ buttonPress=$(python /home/pi/Scripts/touchpadButton.py)
+ if [ $buttonPress -eq 1 ]
+ then
+  counter=1
+  #for next 15 seconds try to connect to other controller
+  while [ $anyConnect -eq 1 ] && [ $counter -lt 3 ]
+  do
+   if [ $oneConnect -eq 1 ]
+   then
+    bluetoothctl -- connect 05:80:73:7B:82:C0
+   else
+    bluetoothctl -- connect 77:23:F5:1C:B5:4A
+   fi
+   sleep 5
+   ((counter++))
+   anyConnect=$(hcitool con | grep "77:23:F5:1C:B5:4A\|05:80:73:7B:82:C0" | grep "state 1" | wc -l)
+  done
+ fi
+fi
